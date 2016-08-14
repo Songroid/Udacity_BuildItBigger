@@ -1,13 +1,37 @@
 package com.jin.song.builditbigger;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+
+import com.jin.song.builditbigger.network.EndpointsAsyncTask;
+import com.jin.song.builditbigger.ui.MainActivity;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
+public class ApplicationTest extends ActivityInstrumentationTestCase2<MainActivity> {
+
+    private MainActivity mainActivity;
+
     public ApplicationTest() {
-        super(Application.class);
+        super(MainActivity.class);
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        mainActivity = getActivity();
+    }
+
+    @UiThreadTest
+    public void testVerifyAsyncTask() {
+        new EndpointsAsyncTask(mainActivity) {
+            @Override
+            protected void onPostExecute(String result) {
+                assertNotNull(result);
+                assertTrue(!result.equals(""));
+                assertEquals(result, "Hi, this is a Joke!");
+            }
+        }.execute();
     }
 }
