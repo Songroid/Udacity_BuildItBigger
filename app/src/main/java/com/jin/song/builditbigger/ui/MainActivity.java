@@ -3,16 +3,15 @@ package com.jin.song.builditbigger.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.Joker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.jin.song.builditbigger.R;
-import com.jin.song.builditbigger.misc.Misc;
-import com.jin.song.displayjoke.JokeActivity;
+import com.jin.song.builditbigger.network.EndpointsAsyncTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,12 +21,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button launchButton = (Button) findViewById(R.id.launchButton);
-        final Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra(Misc.INTENT_EXTRA_LAUNCH_JOKEACTIVITY, Joker.getJoke());
         launchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(intent);
+                new EndpointsAsyncTask(MainActivity.this).execute();
             }
         });
 
