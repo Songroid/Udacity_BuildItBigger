@@ -29,7 +29,7 @@ public class ApplicationTest extends ActivityInstrumentationTestCase2<MainActivi
             @Override
             protected void onPostExecute(String result) {
                 assertNotNull(result);
-                assertTrue(!result.equals(""));
+                assertNotSame(result, "");
                 assertEquals(result, "Hi, this is a Joke!");
             }
         }.execute();
