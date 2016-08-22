@@ -11,6 +11,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -26,6 +27,9 @@ android {
             applicationIdSuffix ".paid"
         }
     }
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
 }
 
 dependencies {
@@ -33,8 +37,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     freeCompile 'com.google.firebase:firebase-ads:9.4.0'
+    freeCompile 'com.google.android.gms:play-services:9.4.0'
     compile project(':javajokes')
-    compile project(":displayjoke")
+    compile project(':displayjoke')
 }
 
 apply plugin: 'com.google.gms.google-services'
