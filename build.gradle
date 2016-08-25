@@ -22,3 +22,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task testGCE(dependsOn: ":backend:appengineRun") {
+    project(':backend').afterEvaluate { backend ->
+        backend.extensions.appengine.daemon = true
+    }
+    doFirst {
+        tasks.findByPath(":app:test").execute()
+    }
+}
+tasks.testGCE.finalizedBy ':backend:appengineStop'
